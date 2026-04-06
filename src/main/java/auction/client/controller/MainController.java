@@ -1,6 +1,11 @@
 package auction.client.controller;
 //xử lý hành động của user
 
-public class MainController {
+import javafx.fxml.FXML;
 
+public class MainController {
+    @FXML
+    public void handleBid(javafx.event.ActionEvent event) {
+
+    }
 }

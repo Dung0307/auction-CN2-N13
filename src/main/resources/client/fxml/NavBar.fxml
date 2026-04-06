@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="auction.client.controller.NavBarController"
+      BorderPane.alignment="CENTER">
+    <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="20.0" style="-fx-background-color: #111111;">
+        <padding>
+            <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
+        </padding>
+        <children>
+            <Label onMouseClicked="#handleSwitchToHome" text="AUCTION HUB"
+                   style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 22px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER_LEFT"
+                  style="-fx-background-color: white; -fx-background-radius: 4; -fx-padding: 0 10 0 0;">
+                <Button style="-fx-background-color: transparent; -fx-text-fill: #555; -fx-font-weight: bold;"
+                        text="All ⌄"/>
+                <TextField prefWidth="350.0" promptText="Search product"
+                           style="-fx-background-color: transparent; -fx-border-width: 0;"/>
+                <Label text="🔍" style="-fx-font-size: 16px; -fx-text-fill: #555;"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Sign In" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        </children>
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="15.0"
+          style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
+        <padding>
+            <Insets left="30.0" right="30.0"/>
+        </padding>
+        <children>
+            <Label text="469,703 results in All Products" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Sort &amp; View" style="-fx-text-fill: #555; -fx-font-size: 13px;"/>
+            <ComboBox promptText="Best Match"
+                      style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-radius: 4;"/>
+            <Button style="-fx-background-color: #0033cc; -fx-text-fill: white; -fx-background-radius: 4;" text="☷"/>
+        </children>
+    </HBox>
+</VBox>
+

@@ -12,7 +12,7 @@ public class MainApp extends Application {
     public void start(Stage stage) { // cửa sổ chính của app
         try {
             // Load giao diện từ file FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/LoginView.fxml"));
             // nút gốc chứa toàn bộ các thành phần giao diện khác
             Parent root = loader.load();
 
@@ -22,8 +22,7 @@ public class MainApp extends Application {
             // gắn cảnh vào cửa sổ
             stage.setScene(scene);
             stage.show();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Lỗi khởi động: " + e.getMessage());
             e.printStackTrace();
         }

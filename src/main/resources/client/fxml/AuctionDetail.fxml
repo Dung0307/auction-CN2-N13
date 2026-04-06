@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="750.0" prefWidth="1200.0" style="-fx-background-color: #f8f9fa;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="auction.client.controller.DetailController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="20.0" style="-fx-background-color: #111111;">
+            <padding>
+                <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
+            </padding>
+            <children>
+                <Button style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;"
+                        text="&lt; Back">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Button>
+                <Label text="AUCTION HUB" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 22px;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="Sign In" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <content>
+                <HBox alignment="TOP_CENTER" spacing="40.0">
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0"/>
+                    </padding>
+                    <children>
+
+                        <VBox spacing="15.0" prefWidth="500.0">
+                            <StackPane
+                                    style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+                                <effect>
+                                    <DropShadow color="#0000001a" radius="10.0" offsetY="5.0"/>
+                                </effect>
+                                <children>
+                                    <ImageView fitHeight="400.0" fitWidth="480.0" pickOnBounds="true"
+                                               preserveRatio="false">
+                                        <image>
+                                            <Image url="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&amp;fit=crop&amp;w=600&amp;q=80"/>
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </StackPane>
+
+                            <HBox spacing="15.0" alignment="CENTER">
+                                <children>
+                                    <StackPane
+                                            style="-fx-background-color: white; -fx-border-color: #3f51b5; -fx-border-width: 2; -fx-border-radius: 4; -fx-cursor: hand; -fx-padding: 2;">
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true"
+                                                   preserveRatio="false">
+                                            <image>
+                                                <Image url="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&amp;fit=crop&amp;w=100&amp;q=80"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <StackPane
+                                            style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 4; -fx-cursor: hand; -fx-padding: 2;">
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true"
+                                                   preserveRatio="false">
+                                            <image>
+                                                <Image url="https://images.unsplash.com/photo-1587836374828-cb433947ca78?auto=format&amp;fit=crop&amp;w=100&amp;q=80"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                    <StackPane
+                                            style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 4; -fx-cursor: hand; -fx-padding: 2;">
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true"
+                                                   preserveRatio="false">
+                                            <image>
+                                                <Image url="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&amp;fit=crop&amp;w=100&amp;q=80"/>
+                                            </image>
+                                        </ImageView>
+                                    </StackPane>
+                                </children>
+                            </HBox>
+                        </VBox>
+
+
+                        <VBox spacing="20.0" prefWidth="550.0">
+                            <VBox spacing="5.0">
+                                <Label text="Luxury Watches"
+                                       style="-fx-text-fill: #3f51b5; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+                                <Label text="Đồng hồ Rolex GMT-Master II Ice" wrapText="true"
+                                       style="-fx-text-fill: #111111; -fx-font-weight: bold; -fx-font-size: 28px;"/>
+                                <HBox spacing="10.0">
+                                    <Label text="Condition: Mint, #081/088"
+                                           style="-fx-text-fill: #555555; -fx-font-size: 14px;"/>
+                                    <Label text="|  Item ID: 90210"
+                                           style="-fx-text-fill: #999999; -fx-font-size: 14px;"/>
+                                </HBox>
+                            </VBox>
+
+                            <Separator/>
+
+                            <VBox spacing="15.0"
+                                  style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 25;">
+                                <effect>
+                                    <DropShadow color="#0000000d" radius="10.0" offsetY="5.0"/>
+                                </effect>
+
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <Label text="⏳ Thời gian còn lại:"
+                                           style="-fx-text-fill: #555555; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                                    <Label text="02h : 45m : 12s"
+                                           style="-fx-text-fill: #d32f2f; -fx-font-size: 20px; -fx-font-weight: bold; -fx-background-color: #ffebee; -fx-padding: 5 10; -fx-background-radius: 4;"/>
+                                </HBox>
+
+                                <Separator/>
+
+                                <VBox spacing="0.0">
+                                    <Label text="Giá hiện tại (Current Bid)"
+                                           style="-fx-text-fill: #777777; -fx-font-size: 14px;"/>
+                                    <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+                                        <Label text="21,500.00 USD"
+                                               style="-fx-text-fill: #111111; -fx-font-weight: bold; -fx-font-size: 36px;"/>
+                                        <Label text="[12 Bids]"
+                                               style="-fx-text-fill: #3f51b5; -fx-font-size: 14px; -fx-cursor: hand;"/>
+                                    </HBox>
+                                </VBox>
+
+                                <VBox spacing="10.0">
+                                    <HBox spacing="10.0">
+                                        <TextField fx:id="bidAmountField" promptText="Nhập giá (VD: 22000)"
+                                                   prefHeight="50.0" HBox.hgrow="ALWAYS"
+                                                   style="-fx-font-size: 16px; -fx-border-color: #ccc; -fx-border-radius: 4; -fx-background-radius: 4;"/>
+                                        <Button text="ĐẶT GIÁ" onAction="#placeBid" prefHeight="50.0" prefWidth="150.0"
+                                                style="-fx-background-color: #3f51b5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 4; -fx-cursor: hand;"/>
+                                    </HBox>
+                                    <Label text="Giá đặt phải lớn hơn: 21,500.00 USD"
+                                           style="-fx-text-fill: #777777; -fx-font-size: 12px;"/>
+                                </VBox>
+
+                                <HBox spacing="10.0">
+                                    <Button text="+ 100 USD"
+                                            style="-fx-background-color: #f4f6f8; -fx-border-color: #ccc; -fx-border-radius: 4; -fx-cursor: hand;"/>
+                                    <Button text="+ 500 USD"
+                                            style="-fx-background-color: #f4f6f8; -fx-border-color: #ccc; -fx-border-radius: 4; -fx-cursor: hand;"/>
+                                    <Button text="+ 1,000 USD"
+                                            style="-fx-background-color: #f4f6f8; -fx-border-color: #ccc; -fx-border-radius: 4; -fx-cursor: hand;"/>
+                                </HBox>
+                            </VBox>
+
+                            <VBox spacing="10.0">
+                                <Label text="Mô tả sản phẩm" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
+                                <Label text="Đồng hồ Rolex GMT-Master II Ice mã tham chiếu 116769TBR. Đây là một trong những chiếc đồng hồ đắt đỏ nhất từng được sản xuất bởi Rolex, với toàn bộ vỏ và dây đeo được khảm kim cương tinh khiết. Tình trạng hoàn hảo, đi kèm hộp và giấy tờ đầy đủ."
+                                       wrapText="true"
+                                       style="-fx-text-fill: #555555; -fx-font-size: 14px; -fx-line-spacing: 5px;"/>
+                            </VBox>
+
+                        </VBox>
+                    </children>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

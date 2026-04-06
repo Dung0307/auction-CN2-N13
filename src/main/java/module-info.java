@@ -2,6 +2,7 @@ module AuctionSystem {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.desktop;
 
     // Cấp quyền cho JavaFX khởi chạy class MainApp trong package này
     exports auction.client;
