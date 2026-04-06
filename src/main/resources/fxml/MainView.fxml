@@ -76,7 +76,7 @@
                                         </ImageView>
                                     </children>
                                 </StackPane>
-                                <Label text="Bức họa 'Sơn mài' nghệ sĩ đương đại" wrapText="true" minHeight="40" style="-fx-text-fill: #2c3e50; -fx-font-size: 15px; -fx-font-weight: bold;" />
+                                <Label text="Bức họa 'Sơn mài' đương đại" wrapText="true" minHeight="40" style="-fx-text-fill: #2c3e50; -fx-font-size: 15px; -fx-font-weight: bold;" />
                                 <Label text="Giá khởi điểm: 45.000.000 VNĐ" style="-fx-text-fill: #e67e22; -fx-font-size: 13px; -fx-font-weight: bold;" />
 
                                 <Region VBox.vgrow="ALWAYS" />
