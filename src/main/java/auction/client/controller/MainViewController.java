@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainController {
+public class MainViewController {
 
     // Hàm này sẽ tự động chạy khi bạn bấm nút "Đấu giá ngay" ở bất kỳ sản phẩm nào
     @FXML

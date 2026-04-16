@@ -18,7 +18,7 @@ public class MainApp extends Application {
 
             Scene scene = new Scene(root, 900, 600);
 
-            stage.setTitle("UET Auction System - Phiên bản 1.0");
+            stage.setTitle("UET Auction System");
             // gắn cảnh vào cửa sổ
             stage.setScene(scene);
             stage.show();
