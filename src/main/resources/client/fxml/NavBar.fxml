@@ -26,7 +26,7 @@
 
             <HBox alignment="CENTER_LEFT" styleClass="search-box">
                 <Button text="Tất cả ⌄" styleClass="search-filter-btn"/>
-                <TextField prefWidth="350.0" promptText="Tìm kiếm dữ liệu Không gian ảo..." styleClass="search-input"/>
+                <TextField prefWidth="350.0" promptText="" styleClass="search-input"/>
                 <Label text="🔍" styleClass="search-icon"/>
             </HBox>
 

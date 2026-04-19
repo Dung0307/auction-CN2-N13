@@ -1,6 +1,6 @@
 package auction.client.controller;
 
-import auction.client.model.ProductStorage;
+import auction.client.model.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,9 +20,9 @@ public class ProductCardController {
     @FXML
     private Label cardPrice;
 
-    private ProductStorage currentProduct;
+    private Product currentProduct;
 
-    public void setData(ProductStorage product) {
+    public void setData(Product product) {
         this.currentProduct = product;
         cardName.setText(product.name);
         cardPrice.setText(product.price + " VNĐ");

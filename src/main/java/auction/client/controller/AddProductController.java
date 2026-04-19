@@ -1,6 +1,6 @@
 package auction.client.controller;
 
-import auction.client.model.ProductStorage;
+import auction.client.model.Product;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -78,8 +77,8 @@ public class AddProductController {
         }
 
         // 2. TẠO ĐỐI TƯỢNG VÀ LƯU VÀO KHO CHUNG
-        ProductStorage newProduct = new ProductStorage(name, price, imageUrl, desc);
-        ProductStorage.allProducts.add(newProduct);
+        Product newProduct = new Product(name, price, imageUrl, desc);
+        Product.allProducts.add(newProduct);
 
         try {
             // 3. QUAY TRỞ VỀ MÀN HÌNH CHÍNH (MainView.fxml)

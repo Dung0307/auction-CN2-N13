@@ -1,6 +1,6 @@
 package auction.client.controller;
 
-import auction.client.model.ProductStorage;
+import auction.client.model.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,7 +21,7 @@ public class MainViewController implements Initializable {
             productContainer.getChildren().clear();
         }
 
-        for (ProductStorage product : ProductStorage.allProducts) {
+        for (Product product : Product.allProducts) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/ProductCard.fxml"));
                 Parent card = loader.load();
