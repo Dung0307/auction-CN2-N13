@@ -15,15 +15,10 @@ public class NavBarController {
     @FXML
     public void handleSwitchToHome(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/MainView.fxml"));
-            Parent root = loader.load();
-            Node currentNode = (Node) event.getSource();
-            Stage stage = (Stage) currentNode.getScene().getWindow();
-            Scene scene = stage.getScene();
-            scene.setRoot(root);
-            stage.setTitle("HomePage");
-            System.out.println("thay doi");
-
+            SceneSwitcher.switchScene(
+                    (Node) event.getSource(),
+                    "/client/fxml/MainView.fxml"
+            );
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,12 +28,11 @@ public class NavBarController {
     @FXML
     public void goToAddProduct(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/AddProduct.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("Auction Hub - Đăng Sản Phẩm Mới");
-            stage.getScene().setRoot(root);
+            //dùng controller switcher đã tạo để chuyển cảnh
+            SceneSwitcher.switchScene(
+                    (Node) event.getSource(),
+                    "/client/fxml/AddProduct.fxml"
+            );
 
         } catch (java.io.IOException e) {
             System.out.println("Lỗi: Không tìm thấy file AddProduct.fxml!");

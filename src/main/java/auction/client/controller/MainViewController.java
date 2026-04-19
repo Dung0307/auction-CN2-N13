@@ -1,6 +1,7 @@
 package auction.client.controller;
 
 import auction.client.model.Product;
+import auction.client.service.ProductService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,13 +16,17 @@ public class MainViewController implements Initializable {
     @FXML
     private FlowPane productContainer;
 
+    // ✅ Service instance
+    private ProductService productService = new ProductService();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (productContainer != null) {
             productContainer.getChildren().clear();
         }
 
-        for (Product product : Product.allProducts) {
+        // ✅ Sử dụng service để lấy tất cả sản phẩm
+        for (Product product : productService.getAllProducts()) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/ProductCard.fxml"));
                 Parent card = loader.load();
@@ -31,7 +36,7 @@ public class MainViewController implements Initializable {
 
                 productContainer.getChildren().add(card);
             } catch (Exception e) {
-                System.out.println("❌ Lỗi load thẻ sản phẩm!");
+                System.out.println("❌ Lỗi load thẻ sản phẩm: " + product.name);
                 e.printStackTrace();
             }
         }

@@ -1,6 +1,7 @@
 package auction.client.controller;
 
 import auction.client.model.Product;
+import auction.client.service.ProductService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -29,31 +30,22 @@ public class AddProductController {
     @FXML
     private ImageView imagePreview;
 
+    // ✅ Service instance
+    private ProductService productService = new ProductService();
+    private static final String DEFAULT_PLACEHOLDER = "https://via.placeholder.com/350x350/0B0B10/D8A95C?text=NO+IMAGE+DATA";
+
     @FXML
     public void initialize() {
         // Cài đặt một ảnh mặc định (Placeholder) khi chưa có link
-        // Có thể dùng một icon cảnh báo hoặc logo của game
-        String defaultPlaceholder = "https://via.placeholder.com/350x350/0B0B10/D8A95C?text=NO+IMAGE+DATA";
-        imagePreview.setImage(new Image(defaultPlaceholder));
+        imagePreview.setImage(new Image(DEFAULT_PLACEHOLDER));
 
+        // Listener xem trước ảnh khi user nhập URL
         imageUrlField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.trim().isEmpty()) {
-                try {
-                    // Cố gắng tải ảnh từ URL mới nhập (thêm true để tải ngầm không làm đơ app)
-                    Image newImage = new Image(newValue, true);
-
-                    newImage.errorProperty().addListener((obs, oldError, newError) -> {
-                        if (newError) {
-                            imagePreview.setImage(new Image(defaultPlaceholder));
-                        }
-                    });
-
-                    imagePreview.setImage(newImage);
-                } catch (Exception e) {
-                    imagePreview.setImage(new Image(defaultPlaceholder));
-                }
+                Image previewImage = productService.loadImageWithFallback(newValue, DEFAULT_PLACEHOLDER);
+                imagePreview.setImage(previewImage);
             } else {
-                imagePreview.setImage(new Image(defaultPlaceholder));
+                imagePreview.setImage(new Image(DEFAULT_PLACEHOLDER));
             }
         });
     }
@@ -71,26 +63,24 @@ public class AddProductController {
         String imageUrl = imageUrlField.getText();
         String desc = descriptionArea.getText();
 
-        if (name.isEmpty() || price.isEmpty() || imageUrl.isEmpty()) {
-            System.out.println("Lỗi: Thiếu thông tin!");
-            return;
-        }
-
-        // 2. TẠO ĐỐI TƯỢNG VÀ LƯU VÀO KHO CHUNG
-        Product newProduct = new Product(name, price, imageUrl, desc);
-        Product.allProducts.add(newProduct);
-
         try {
+            // 2. ✅ GỌI SERVICE ĐỂ THÊM PRODUCT
+            // Service sẽ tự động validate dữ liệu
+            productService.addProduct(name, price, imageUrl, desc);
+
             // 3. QUAY TRỞ VỀ MÀN HÌNH CHÍNH (MainView.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/MainView.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root); // Dùng setRoot để chuyển cảnh mượt mà
+            stage.getScene().setRoot(root);
             stage.setTitle("Auction Hub - Trang chủ");
 
+        } catch (IllegalArgumentException e) {
+            // ✅ Xử lý lỗi từ service
+            System.out.println("❌ Lỗi: " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("Lỗi chuyển trang chủ: " + e.getMessage());
+            System.out.println("❌ Lỗi chuyển trang chủ: " + e.getMessage());
         }
     }
 

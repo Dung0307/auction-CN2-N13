@@ -1,9 +1,11 @@
 package auction.client.controller;
 
-import javafx.event.ActionEvent;
+import auction.client.exception.AuctionClosedException;
+import auction.client.exception.InvalidBidException;
+import auction.client.model.Product;
+import auction.client.service.AuctionService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,10 +38,11 @@ public class AuctionDetailController implements Initializable {
     private Label descriptionLabel;
     @FXML
     private TextField bidAmountField;
-    @FXML
-    private LineChart<String, Number> priceHistoryChart;
 
+    // ✅ Service instance
+    private final AuctionService auctionService = new AuctionService();
     private double currentMinimumBid = 0;
+    private Product currentProduct = null;  // ✅ LƯU PRODUCT HIỆN TẠI
 
     // 2. HÀM KHỞI TẠO (Bộ lọc thông minh không làm mất focus)
     @Override
@@ -73,41 +76,86 @@ public class AuctionDetailController implements Initializable {
             productImage.setImage(new Image(imageUrl));
         }
 
+        // ✅ TẠO PRODUCT OBJECT VÀ LƯU LẠI
+        currentProduct = new Product(name, price, imageUrl, description);
+
+        // ✅ Sử dụng service để extract giá
         try {
-            String cleanNumber = nextBid.replaceAll("[^0-9]", "");
-            currentMinimumBid = Double.parseDouble(cleanNumber);
+            currentMinimumBid = auctionService.extractPriceFromString(nextBid);
         } catch (Exception e) {
             currentMinimumBid = 0;
         }
     }
 
-    // 4. HÀM ĐẶT GIÁ (Xử lý logic và gọi Popup)
-
+    // 4. HÀM ĐẶT GIÁ (Sử dụng AuctionService để validate)
+    /**
+     * 4. HÀM ĐẶT GIÁ
+     * Controller chỉ:
+     * - lấy input từ UI
+     * - gọi service
+     * - hiển thị popup
+     */
     @FXML
-    public void placeBid(ActionEvent event) {
-        String bidText = bidAmountField.getText();
+    public void placeBid() {
 
-        if (bidText == null || bidText.trim().isEmpty()) {
-            showErrorPopup("Lỗi nhập liệu", "Vui lòng nhập số tiền bạn muốn đấu giá!");
+        // Kiểm tra product có được tải chưa
+        if (currentProduct == null) {
+            showErrorPopup("Lỗi", "Sản phẩm chưa được tải!");
             return;
         }
 
+        // Lấy giá user nhập
+        String bidText = bidAmountField.getText();
+
         try {
-            double bidAmount = Double.parseDouble(bidText);
 
-            if (bidAmount < currentMinimumBid) {
-                showErrorPopup("Giá đặt không hợp lệ",
-                        "Mức giá của bạn quá thấp.\nVui lòng đặt lớn hơn hoặc bằng " + String.format("%,.0f", currentMinimumBid) + " VNĐ.");
-                return;
-            }
+            // 1. Validate bid bằng service
+            auctionService.validateBid(bidText, currentMinimumBid);
 
-            // Thành công
-            System.out.println("Backend log: Đặt giá " + bidAmount + " thành công!");
-            showSuccessPopup("Đấu giá hợp lệ", "Chúc mừng! Giá đấu của bạn đã được ghi nhận và đang là mức giá cao nhất hiện tại.");
+            // 2. Parse thành số
+            double bidAmount =
+                    auctionService.parseBidAmount(bidText);
+
+            // 3. ✅ Gọi service với currentProduct (KHÔNG PHẢI NULL)
+            auctionService.placeBid(currentProduct, bidAmount);
+
+            // 4. Hiển thị thành công
+            showSuccessPopup(
+                    "Đấu giá hợp lệ",
+                    "Chúc mừng! Giá đấu của bạn đã được ghi nhận."
+            );
+
+            // 5. Cập nhật giá trên UI
+            currentPriceLabel.setText(currentProduct.price);
+            currentMinimumBid = auctionService.calculateNextMinimumBid(
+                    auctionService.extractPriceFromString(currentProduct.price)
+            );
+            nextBidLabel.setText("* Giá đặt tiếp theo tối thiểu: " +
+                    auctionService.formatPrice(currentMinimumBid) + " VNĐ");
+
+            // 6. Clear input
             bidAmountField.clear();
 
-        } catch (NumberFormatException e) {
-            showErrorPopup("Lỗi hệ thống", "Định dạng số tiền không đúng!");
+        }
+        catch (InvalidBidException e) {
+
+            // Lỗi giá đặt không hợp lệ
+            showErrorPopup("Giá đặt không hợp lệ", e.getMessage());
+
+        }
+        catch (AuctionClosedException e) {
+
+            // Phiên đấu giá đã đóng
+            showErrorPopup("Phiên đã đóng", e.getMessage());
+
+        }
+        catch (Exception e) {
+
+            // Lỗi hệ thống
+            showErrorPopup(
+                    "Lỗi hệ thống",
+                    "Có lỗi xảy ra khi xử lý đấu giá: " + e.getMessage()
+            );
         }
     }
 
@@ -116,7 +164,7 @@ public class AuctionDetailController implements Initializable {
     }
 
     private void showSuccessPopup(String title, String message) {
-        showCustomPopup(Alert.AlertType.INFORMATION, title, message, "#D8A95C", "🎉");
+        showCustomPopup(Alert.AlertType.INFORMATION, title, message, "#27AE60", "✅");
     }
 
     private void showCustomPopup(Alert.AlertType type, String title, String message, String hexColor, String emojiIcon) {
@@ -172,7 +220,7 @@ public class AuctionDetailController implements Initializable {
         );
 
 
-        Button okButton = (Button) dialogPane.lookupButton(alert.getButtonTypes().get(0));
+        Button okButton = (Button) dialogPane.lookupButton(alert.getButtonTypes().getFirst());
         okButton.setText("XÁC NHẬN");
         okButton.setStyle(
                 "-fx-background-color: linear-gradient(to bottom, #242430, #1A1A24);" +
