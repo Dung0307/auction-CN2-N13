@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox prefHeight="170.0" prefWidth="350.0" spacing="15.0" styleClass="product-card"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="auction.client.controller.ProductCardController">
+
+    <StackPane prefHeight="140.0" prefWidth="110.0" styleClass="card-image-wrapper">
+        <children>
+            <ImageView fx:id="cardImage" fitHeight="130.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"/>
+        </children>
+    </StackPane>
+
+    <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+        <Label fx:id="cardName" text="Tên sản phẩm" wrapText="true" styleClass="card-title"/>
+        <Label text="Sản phẩm đấu giá" styleClass="text-muted" style="-fx-font-size: 11px;"/>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <Label text="Giá hiện tại:" styleClass="text-muted" style="-fx-font-size: 12px;"/>
+
+        <Label fx:id="cardPrice" text="0 VNĐ" styleClass="card-price"/>
+
+        <Button onAction="#handleBid" text="⚡ ĐẤU GIÁ NGAY" maxWidth="Infinity" styleClass="btn-submit"
+                style="-fx-font-size: 12px;">
+            <VBox.margin>
+                <Insets top="8.0"/>
+            </VBox.margin>
+        </Button>
+    </VBox>
+</HBox>

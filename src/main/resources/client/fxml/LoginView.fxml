@@ -10,137 +10,112 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.effect.GaussianBlur?>
 
-<HBox prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+<HBox prefHeight="750.0" prefWidth="1200.0" styleClass="login-root"
+      stylesheets="@../css/style.css"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="auction.client.controller.LoginViewController">
 
-    <VBox alignment="CENTER" style="-fx-background-color: #f4f6f8;" HBox.hgrow="ALWAYS">
+    <StackPane HBox.hgrow="ALWAYS" styleClass="cosmic-bg">
         <children>
-            <HBox alignment="CENTER" spacing="30.0">
-                <children>
-                    <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="https://upload.wikimedia.org/wikipedia/vi/1/1b/Logo_UET.png"/>
-                        </image>
-                    </ImageView>
-                    <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="https://upload.wikimedia.org/wikipedia/vi/thumb/1/13/Logo_VNU.svg/1200px-Logo_VNU.svg.png"/>
-                        </image>
-                    </ImageView>
-                </children>
-            </HBox>
-        </children>
-    </VBox>
+            <Circle fill="#00e5ff" opacity="0.1" radius="200.0" translateX="-150.0" translateY="-100.0">
+                <effect>
+                    <GaussianBlur radius="80.0"/>
+                </effect>
+            </Circle>
+            <Circle fill="#d8a95c" opacity="0.08" radius="250.0" translateX="150.0" translateY="200.0">
+                <effect>
+                    <GaussianBlur radius="100.0"/>
+                </effect>
+            </Circle>
 
-    <VBox alignment="TOP_CENTER" prefWidth="450.0" spacing="20.0" style="-fx-background-color: white;">
+            <VBox alignment="TOP_CENTER" spacing="20.0">
+                <padding>
+                    <Insets top="40.0" bottom="40.0" left="40.0" right="40.0"/>
+                </padding>
+                <children>
+                    <HBox alignment="CENTER" spacing="40.0">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="https://upload.wikimedia.org/wikipedia/vi/1/1b/Logo_UET.png"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="https://upload.wikimedia.org/wikipedia/vi/thumb/1/13/Logo_VNU.svg/1200px-Logo_VNU.svg.png"/>
+                            </image>
+                        </ImageView>
+                    </HBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+
+                    <VBox alignment="CENTER" spacing="5.0">
+                        <Label text="⚖" styleClass="scale-icon"/>
+                        <Label text="AUCTION HUB" styleClass="text-bright"
+                               style="-fx-font-size: 45px; -fx-font-weight: bold;"/>
+                    </VBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+                </children>
+            </VBox>
+        </children>
+    </StackPane>
+
+    <VBox alignment="TOP_CENTER" prefWidth="480.0" spacing="25.0" styleClass="login-form-panel">
         <padding>
-            <Insets bottom="40.0" left="50.0" right="50.0" top="40.0"/>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
         </padding>
         <children>
 
-            <HBox alignment="CENTER" prefHeight="50.0">
+            <HBox alignment="CENTER" prefHeight="40.0">
                 <children>
-                    <Button style="-fx-background-color: transparent; -fx-cursor: hand;" text="&lt;" textFill="#555555">
-                        <font>
-                            <Font name="System Bold" size="20.0"/>
-                        </font>
-                    </Button>
-
+                    <Button styleClass="btn-icon-transparent, text-muted" text="&lt;" style="-fx-font-size: 22px;"/>
                     <Region HBox.hgrow="ALWAYS"/>
-
-                    <Label text="AUCTION HUB" textFill="#1a237e">
-                        <font>
-                            <Font name="System Bold Italic" size="22.0"/>
-                        </font>
-                    </Label>
-
+                    <Label text="ĐĂNG NHẬP" styleClass="text-bright"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                     <Region HBox.hgrow="ALWAYS"/>
+                    <Button styleClass="btn-icon-transparent, text-muted" text="X" style="-fx-font-size: 20px;"/>
+                </children>
+            </HBox>
 
-                    <Button style="-fx-background-color: transparent; -fx-cursor: hand;" text="X" textFill="#555555">
-                        <font>
-                            <Font size="18.0"/>
-                        </font>
-                    </Button>
+            <Region prefHeight="20.0"/>
+
+            <TextField fx:id="loginText" prefHeight="55.0" promptText="Nhập địa chỉ mail/Tên người dùng"
+                       styleClass="login-input-field"/>
+            <PasswordField prefHeight="55.0" promptText="Nhập mật khẩu" styleClass="login-input-field"/>
+
+            <HBox alignment="CENTER">
+                <children>
+                    <Label text="Đăng ký ngay" styleClass="text-link, text-gold"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Quên mật khẩu" styleClass="text-link, text-gold"/>
                 </children>
             </HBox>
 
             <Region prefHeight="10.0"/>
 
-            <TextField fx:id="loginText" prefHeight="45.0" promptText="Nhập địa chỉ mail/Tên người dùng"
-                       style="-fx-background-color: #fafafa; -fx-border-color: #e0e0e0; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 10;">
-                <font>
-                    <Font size="14.0"/>
-                </font>
-            </TextField>
+            <Button maxWidth="Infinity" onAction="#login" prefHeight="55.0" text="VÀO HỆ THỐNG"
+                    styleClass="btn-login-submit"/>
 
-            <PasswordField prefHeight="45.0" promptText="Nhập mật khẩu"
-                           style="-fx-background-color: #fafafa; -fx-border-color: #e0e0e0; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 10;">
-                <font>
-                    <Font size="14.0"/>
-                </font>
-            </PasswordField>
+            <Region prefHeight="20.0"/>
 
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" spacing="15.0">
                 <children>
-                    <Label style="-fx-cursor: hand;" text="Đăng ký ngay" textFill="#e6a855">
-                        <font>
-                            <Font name="System Bold" size="13.0"/>
-                        </font>
-                    </Label>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Label style="-fx-cursor: hand;" text="Quên mật khẩu" textFill="#e6a855">
-                        <font>
-                            <Font name="System Bold" size="13.0"/>
-                        </font>
-                    </Label>
+                    <Separator HBox.hgrow="ALWAYS" styleClass="social-separator"/>
+                    <Label text="Hoặc đăng nhập bằng" styleClass="text-muted" style="-fx-font-size: 13px;"/>
+                    <Separator HBox.hgrow="ALWAYS" styleClass="social-separator"/>
                 </children>
             </HBox>
 
-            <Button maxWidth="Infinity" onAction="#login" prefHeight="45.0"
-                    style="-fx-background-color: #f6d379; -fx-text-fill: #333333; -fx-background-radius: 4; -fx-cursor: hand;"
-                    text="Vào">
-                <font>
-                    <Font name="System Bold" size="16.0"/>
-                </font>
-            </Button>
-
-            <Region prefHeight="15.0"/>
-
-            <HBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER" spacing="15.0">
                 <children>
-                    <Separator HBox.hgrow="ALWAYS"/>
-                    <Label text="Đăng nhập bằng" textFill="#999999">
-                        <font>
-                            <Font size="12.0"/>
-                        </font>
-                    </Label>
-                    <Separator HBox.hgrow="ALWAYS"/>
-                </children>
-            </HBox>
-
-            <HBox alignment="CENTER" spacing="20.0">
-                <children>
-                    <Button style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 8 15; -fx-cursor: hand;"
-                            text="Google" textFill="#555555">
-                        <font>
-                            <Font name="System Bold" size="12.0"/>
-                        </font>
-                    </Button>
-                    <Button style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 8 15; -fx-cursor: hand;"
-                            text="Facebook" textFill="#1877f2">
-                        <font>
-                            <Font name="System Bold" size="12.0"/>
-                        </font>
-                    </Button>
-                    <Button style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 8 15; -fx-cursor: hand;"
-                            text="Twitter" textFill="#000000">
-                        <font>
-                            <Font name="System Bold" size="12.0"/>
-                        </font>
-                    </Button>
+                    <Button text="Google" styleClass="btn-social, text-bright"/>
+                    <Button text="Facebook" styleClass="btn-social, text-cyan"/>
+                    <Button text="Twitter" styleClass="btn-social, text-bright"/>
                 </children>
             </HBox>
 
