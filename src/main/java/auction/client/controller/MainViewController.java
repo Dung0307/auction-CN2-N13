@@ -36,7 +36,7 @@ public class MainViewController implements Initializable {
 
                 productContainer.getChildren().add(card);
             } catch (Exception e) {
-                System.out.println("❌ Lỗi load thẻ sản phẩm: " + product.name);
+                System.out.println("❌ Lỗi load thẻ sản phẩm: " + product.getName());
                 e.printStackTrace();
             }
         }

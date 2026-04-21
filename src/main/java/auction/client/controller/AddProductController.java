@@ -59,7 +59,7 @@ public class AddProductController {
     public void handleSaveProduct(ActionEvent event) {
         // 1. Lấy dữ liệu từ Form
         String name = nameField.getText();
-        String price = priceField.getText().replaceAll("[^0-9]", "");
+        String price = priceField.getText();  // Giữ format "VNĐ" (string) để service xử lý
         String imageUrl = imageUrlField.getText();
         String desc = descriptionArea.getText();
 
