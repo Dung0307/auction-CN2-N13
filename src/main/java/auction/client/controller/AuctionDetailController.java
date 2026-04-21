@@ -5,6 +5,7 @@ import auction.client.exception.InvalidBidException;
 import auction.client.model.Product;
 import auction.client.network.AuctionClient;
 import auction.client.service.AuctionService;
+import auction.client.service.ProductService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -41,11 +42,16 @@ public class AuctionDetailController implements Initializable {
     private Label descriptionLabel;
     @FXML
     private TextField bidAmountField;
+    @FXML
+    private Label categoryLabel;
 
     // ✅ Service instance
     private final AuctionService auctionService = new AuctionService();
     private double currentMinimumBid = 0;
     private Product currentProduct = null;  // ✅ LƯU PRODUCT HIỆN TẠI
+
+    private final ProductService productService = new ProductService();
+    private static final String DEFAULT_PLACEHOLDER = "https://via.placeholder.com/600x600/0B0B10/D8A95C?text=NO+IMAGE+DATA";
 
     // ✅ Thông tin người dùng (tạm thời - cần lấy từ session login)
     private int currentUserId = 1;  // TODO: Lấy từ User login
@@ -62,10 +68,11 @@ public class AuctionDetailController implements Initializable {
             return change;
         };
         bidAmountField.setTextFormatter(new TextFormatter<>(filter));
+
     }
 
     // 3. HÀM ĐỔ DỮ LIỆU TỪ TRANG MAIN
-    public void setProductData(String name, String price, String imageUrl,
+    public void setProductData(String name, String price, String imageUrl, String category,
                                String condition, String productId,
                                String nextBid, String storeName, String description) {
 
@@ -73,18 +80,21 @@ public class AuctionDetailController implements Initializable {
         productTitle.setText(name);
         currentPriceLabel.setText(price);
 
+        // cập nhật tên sản phẩm
+        categoryLabel.setText(category);
+
         conditionLabel.setText("Tình trạng: " + condition);
         productIdLabel.setText("Mã SP: " + productId);
         nextBidLabel.setText("* Giá đặt tiếp theo tối thiểu: " + nextBid);
         storeNameLabel.setText(storeName);
         descriptionLabel.setText(description);
 
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            productImage.setImage(new Image(imageUrl));
-        }
+        System.out.println("🖼️ Đang tải ảnh chi tiết từ: " + imageUrl); // In ra để dễ debug
+        Image image = productService.loadImageWithFallback(imageUrl, DEFAULT_PLACEHOLDER);
+        productImage.setImage(image);
 
         // ✅ TẠO PRODUCT OBJECT VÀ LƯU LẠI
-        currentProduct = new Product(name, price, imageUrl, description);
+        currentProduct = new Product(name, price, imageUrl, description, category);
 
         // ✅ Sử dụng service để extract giá
         try {
@@ -95,6 +105,7 @@ public class AuctionDetailController implements Initializable {
     }
 
     // 4. HÀM ĐẶT GIÁ (Sử dụng AuctionService để validate)
+
     /**
      * 4. HÀM ĐẶT GIÁ
      * Controller chỉ:
@@ -158,20 +169,17 @@ public class AuctionDetailController implements Initializable {
             // 7. Clear input
             bidAmountField.clear();
 
-        }
-        catch (InvalidBidException e) {
+        } catch (InvalidBidException e) {
 
             // Lỗi giá đặt không hợp lệ
             showErrorPopup("Giá đặt không hợp lệ", e.getMessage());
 
-        }
-        catch (AuctionClosedException e) {
+        } catch (AuctionClosedException e) {
 
             // Phiên đấu giá đã đóng
             showErrorPopup("Phiên đã đóng", e.getMessage());
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
             // Lỗi hệ thống
             showErrorPopup(

@@ -9,12 +9,14 @@ public class Product {
     public String price;
     public String imageUrl;
     public String desc;
+    public String category;
 
-    public Product(String name, String price, String imageUrl, String desc) {
+    public Product(String name, String price, String imageUrl, String desc, String category) {
         this.name = name;
         this.price = price;
         this.imageUrl = imageUrl;
         this.desc = desc;
+        this.category = category;
     }
 
     public static ObservableList<Product> allProducts = FXCollections.observableArrayList();
