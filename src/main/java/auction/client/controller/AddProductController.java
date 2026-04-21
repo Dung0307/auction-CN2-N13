@@ -1,10 +1,19 @@
 package auction.client.controller;
 
+import auction.client.model.Product;
+import auction.client.service.ProductService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class AddProductController {
 
@@ -13,47 +22,32 @@ public class AddProductController {
     @FXML
     private TextField priceField;
     @FXML
-    private TextField stepField; // Mới thêm
+    private TextField stepField;
     @FXML
     private TextField imageUrlField;
     @FXML
     private TextArea descriptionArea;
     @FXML
-    private ImageView imagePreview; // Mới thêm
+    private ImageView imagePreview;
+
+    // ✅ Service instance
+    private ProductService productService = new ProductService();
+    private static final String DEFAULT_PLACEHOLDER = "https://via.placeholder.com/350x350/0B0B10/D8A95C?text=NO+IMAGE+DATA";
 
     @FXML
     public void initialize() {
         // Cài đặt một ảnh mặc định (Placeholder) khi chưa có link
-        // Có thể dùng một icon cảnh báo hoặc logo của game
-        String defaultPlaceholder = "https://via.placeholder.com/350x350/0B0B10/D8A95C?text=NO+IMAGE+DATA";
-        imagePreview.setImage(new Image(defaultPlaceholder));
+        imagePreview.setImage(new Image(DEFAULT_PLACEHOLDER));
 
-        // LẮNG NGHE SỰ KIỆN: Cứ mỗi khi nội dung ô Link Ảnh thay đổi
+        // Listener xem trước ảnh khi user nhập URL
         imageUrlField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.trim().isEmpty()) {
-                try {
-                    // Cố gắng tải ảnh từ URL mới nhập (thêm true để tải ngầm không làm đơ app)
-                    Image newImage = new Image(newValue, true);
-
-                    // Kiểm tra xem ảnh có bị lỗi (link hỏng) không
-                    newImage.errorProperty().addListener((obs, oldError, newError) -> {
-                        if (newError) {
-                            imagePreview.setImage(new Image(defaultPlaceholder));
-                        }
-                    });
-
-                    imagePreview.setImage(newImage);
-                } catch (Exception e) {
-                    // Nếu dán bậy bạ không phải link thì gán lại ảnh mặc định
-                    imagePreview.setImage(new Image(defaultPlaceholder));
-                }
+                Image previewImage = productService.loadImageWithFallback(newValue, DEFAULT_PLACEHOLDER);
+                imagePreview.setImage(previewImage);
             } else {
-                imagePreview.setImage(new Image(defaultPlaceholder));
+                imagePreview.setImage(new Image(DEFAULT_PLACEHOLDER));
             }
         });
-
-        // (Tùy chọn) Dũng có thể copy lại đoạn code Format tiền tệ
-        // cho priceField và stepField vào đây giống hệt như DetailController
     }
 
     @FXML
@@ -62,10 +56,32 @@ public class AddProductController {
     }
 
     @FXML
-    public void handleSaveProduct() {
-        System.out.println("Tên: " + nameField.getText());
-        System.out.println("Giá: " + priceField.getText());
-        System.out.println("Bước nhảy: " + stepField.getText());
-        System.out.println("Ảnh: " + imageUrlField.getText());
+    public void handleSaveProduct(ActionEvent event) {
+        // 1. Lấy dữ liệu từ Form
+        String name = nameField.getText();
+        String price = priceField.getText().replaceAll("[^0-9]", "");
+        String imageUrl = imageUrlField.getText();
+        String desc = descriptionArea.getText();
+
+        try {
+            // 2. ✅ GỌI SERVICE ĐỂ THÊM PRODUCT
+            // Service sẽ tự động validate dữ liệu
+            productService.addProduct(name, price, imageUrl, desc);
+
+            // 3. QUAY TRỞ VỀ MÀN HÌNH CHÍNH (MainView.fxml)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/MainView.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.getScene().setRoot(root);
+            stage.setTitle("Auction Hub - Trang chủ");
+
+        } catch (IllegalArgumentException e) {
+            // ✅ Xử lý lỗi từ service
+            System.out.println("❌ Lỗi: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("❌ Lỗi chuyển trang chủ: " + e.getMessage());
+        }
     }
+
 }

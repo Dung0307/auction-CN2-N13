@@ -1,3 +1,34 @@
-/target/
-/.idea/
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+
+### Build folders ###
+bin/
+target/
+out/
+
+### Eclipse ###
+.metadata/
+.classpath
+.project
+.settings/
+*.launch
+
+### IntelliJ IDEA ###
+.idea/
 *.iml
+*.iws
+
+### VS Code ###
+.vscode/
+
+### Operating System ###
+Thumbs.db
+.DS_Store
+desktop.ini
+
+### Others ###
+*.log
+*.tmp
