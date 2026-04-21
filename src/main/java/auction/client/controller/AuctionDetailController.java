@@ -3,6 +3,7 @@ package auction.client.controller;
 import auction.client.exception.AuctionClosedException;
 import auction.client.exception.InvalidBidException;
 import auction.client.model.Product;
+import auction.client.network.AuctionClient;
 import auction.client.service.AuctionService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,8 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+
+import static auction.client.network.AuctionClient.sendBidToServer;
 
 public class AuctionDetailController implements Initializable {
 
@@ -43,6 +46,10 @@ public class AuctionDetailController implements Initializable {
     private final AuctionService auctionService = new AuctionService();
     private double currentMinimumBid = 0;
     private Product currentProduct = null;  // ✅ LƯU PRODUCT HIỆN TẠI
+
+    // ✅ Thông tin người dùng (tạm thời - cần lấy từ session login)
+    private int currentUserId = 1;  // TODO: Lấy từ User login
+    private int currentAuctionId = 1;  // TODO: Lấy từ Product ID
 
     // 2. HÀM KHỞI TẠO (Bộ lọc thông minh không làm mất focus)
     @Override
@@ -119,13 +126,28 @@ public class AuctionDetailController implements Initializable {
             // 3. ✅ Gọi service với currentProduct (KHÔNG PHẢI NULL)
             auctionService.placeBid(currentProduct, bidAmount);
 
-            // 4. Hiển thị thành công
-            showSuccessPopup(
-                    "Đấu giá hợp lệ",
-                    "Chúc mừng! Giá đấu của bạn đã được ghi nhận."
+            // 4. 🌐 GỬI REQUEST LÊN SERVER
+            boolean serverResponse = AuctionClient.sendBidToServer(
+                    currentAuctionId,
+                    currentUserId,
+                    bidAmount
             );
 
-            // 5. Cập nhật giá trên UI
+            // 5. Hiển thị kết quả
+            if (serverResponse) {
+                showSuccessPopup(
+                        "Đấu giá hợp lệ",
+                        "Chúc mừng! Giá đấu của bạn đã được ghi nhận trên server."
+                );
+            } else {
+                showErrorPopup(
+                        "Cảnh báo",
+                        "Giá đặt hợp lệ nhưng không gửi được lên server.\n" +
+                                "Vui lòng kiểm tra kết nối!"
+                );
+            }
+
+            // 6. Cập nhật giá trên UI
             currentPriceLabel.setText(currentProduct.price);
             currentMinimumBid = auctionService.calculateNextMinimumBid(
                     auctionService.extractPriceFromString(currentProduct.price)
@@ -133,7 +155,7 @@ public class AuctionDetailController implements Initializable {
             nextBidLabel.setText("* Giá đặt tiếp theo tối thiểu: " +
                     auctionService.formatPrice(currentMinimumBid) + " VNĐ");
 
-            // 6. Clear input
+            // 7. Clear input
             bidAmountField.clear();
 
         }

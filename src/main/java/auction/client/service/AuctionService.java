@@ -71,7 +71,8 @@ public class AuctionService {
      * 2. PLACE BID
      * Xử lý đặt giá
      */
-    public void placeBid(Product product, double bidAmount)
+    // MBao thêm synchronized vào nhé !!
+    public synchronized void placeBid(Product product, double bidAmount)
             throws InvalidBidException, AuctionClosedException {
 
         // Lấy giá hiện tại từ product
