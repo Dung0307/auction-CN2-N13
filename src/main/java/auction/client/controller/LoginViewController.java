@@ -40,8 +40,8 @@ public class LoginViewController {
         }
 
         boolean loginResult = AuctionClient.sendLoginRequestToServer(userName, passwork);
-
-        if (loginResult) {
+// Để đăng nhập tạm khi chưa có phần đăng kí tài khoản
+        if (loginResult || (userName.equals("nhom13") && passwork.equals("deptrai"))) {
             Platform.runLater(() -> {
                 try {
                     SceneSwitcher.switchScene(
