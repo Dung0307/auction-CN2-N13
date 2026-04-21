@@ -86,7 +86,7 @@
 
             <TextField fx:id="loginText" prefHeight="55.0" promptText="Nhập địa chỉ mail/Tên người dùng"
                        styleClass="login-input-field"/>
-            <PasswordField prefHeight="55.0" promptText="Nhập mật khẩu" styleClass="login-input-field"/>
+            <PasswordField fx:id="passworkText" prefHeight="55.0" promptText="Nhập mật khẩu" styleClass="login-input-field"/>
 
             <HBox alignment="CENTER">
                 <children>
