@@ -1,4 +1,4 @@
-package auction.client.model;
+/**package auction.client.model;
 
 import static auction.client.model.AuctionItem.notifyUser;
 //Đây là mbao viết lúc chuwa biết là đã có AUctionService trước đó rồi
@@ -13,7 +13,7 @@ public class AuctionService {
         }
 
         // 2. Tạo Bid mới
-        Bid bid = new Bid(user, amount);
+        BidTransaction bid = new BidTransaction(user, amount);
 
         // 3. Cập nhật item
         item.setCurrentPrice(amount);
@@ -27,3 +27,4 @@ public class AuctionService {
     }
 
 }
+ */

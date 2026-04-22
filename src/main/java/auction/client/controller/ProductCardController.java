@@ -24,11 +24,11 @@ public class ProductCardController {
 
     public void setData(Product product) {
         this.currentProduct = product;
-        cardName.setText(product.name);
-        cardPrice.setText(product.price + " VNĐ");
+        cardName.setText(product.getName());
+        cardPrice.setText(product.getPrice() + " VNĐ");
 
         try {
-            cardImage.setImage(new Image(product.imageUrl, true));
+            cardImage.setImage(new Image(product.getImageUrl(), true));
         } catch (Exception e) {
 
         }
@@ -37,25 +37,25 @@ public class ProductCardController {
     @FXML
     public void handleBid(ActionEvent event) {
         try {
-            System.out.println("Khách hàng đang xem: " + currentProduct.name);
+            System.out.println("Khách hàng đang xem: " + currentProduct.getName());
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/AuctionDetail.fxml"));
             Parent root = loader.load();
 
             AuctionDetailController detailController = loader.getController();
             detailController.setProductData(
-                    currentProduct.name,
-                    currentProduct.price + " VNĐ",
-                    currentProduct.imageUrl,
+                    currentProduct.getName(),
+                    currentProduct.getPrice() + " VNĐ",
+                    currentProduct.getImageUrl(),
                     "Tình trạng: Mới",
                     "#SP-" + (int) (Math.random() * 1000),
-                    (Double.parseDouble(currentProduct.price) + 1000000) + " VNĐ",
+                    (Double.parseDouble(currentProduct.getPrice()) + 1000000) + " VNĐ",
                     "Người bán ẩn danh",
-                    currentProduct.desc
+                    currentProduct.getDescription()
             );
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("Auction Hub - Chi tiết: " + currentProduct.name);
+            stage.setTitle("Auction Hub - Chi tiết: " + currentProduct.getName());
             stage.getScene().setRoot(root);
 
         } catch (Exception e) {

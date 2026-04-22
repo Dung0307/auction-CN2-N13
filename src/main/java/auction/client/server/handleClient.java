@@ -54,7 +54,7 @@ public class handleClient {
                 try {
                     ManageUser manageUser = new ManageUser();
                     for (User pt: manageUser.getUserList()) {
-                        if (pt.getName().equals(parts[1])
+                        if (pt.getUsername().equals(parts[1])
                         && pt.getPassword().equals(parts[2])) {
                             out.println("SUCCESS");
                             return;

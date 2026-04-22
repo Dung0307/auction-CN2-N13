@@ -6,14 +6,12 @@ import auction.client.model.Product;
 
 /**
  * AuctionService - Xử lý tất cả logic liên quan đến đấu giá
- *
  * NHIỆM VỤ:
  * - Validate giá đặt
  * - Tính mức giá tiếp theo
  * - Parse & format giá
  * - Xử lý đặt giá
  * - Quản lý trạng thái phiên đấu giá
- *
  * Controller chỉ gọi service này, KHÔNG xử lý logic
  */
 public class AuctionService {
@@ -77,7 +75,7 @@ public class AuctionService {
 
         // Lấy giá hiện tại từ product
         double currentPrice =
-                extractPriceFromString(product.price);
+                extractPriceFromString(product.getPrice());
 
         // Tính mức giá tối thiểu tiếp theo
         double minimumBid =
@@ -87,7 +85,7 @@ public class AuctionService {
         validateBid(String.valueOf(bidAmount), minimumBid);
 
         // Cập nhật giá mới
-        product.price = formatPrice(bidAmount);
+        product.setPrice(formatPrice(bidAmount));
     }
 
     /**

@@ -148,9 +148,9 @@ public class AuctionDetailController implements Initializable {
             }
 
             // 6. Cập nhật giá trên UI
-            currentPriceLabel.setText(currentProduct.price);
+            currentPriceLabel.setText(currentProduct.getPrice());
             currentMinimumBid = auctionService.calculateNextMinimumBid(
-                    auctionService.extractPriceFromString(currentProduct.price)
+                    auctionService.extractPriceFromString(currentProduct.getPrice())
             );
             nextBidLabel.setText("* Giá đặt tiếp theo tối thiểu: " +
                     auctionService.formatPrice(currentMinimumBid) + " VNĐ");

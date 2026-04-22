@@ -61,7 +61,7 @@ public class ProductService {
 
         // Kiểm tra tên không trùng lặp
         for (Product product : Product.allProducts) {
-            if (product.name.equalsIgnoreCase(name.trim())) {
+            if (product.getName().equalsIgnoreCase(name.trim())) {
                 return false;
             }
         }
@@ -86,8 +86,8 @@ public class ProductService {
 
         String searchTerm = keyword.toLowerCase().trim();
         return Product.allProducts.stream()
-                .filter(p -> p.name.toLowerCase().contains(searchTerm) ||
-                            p.desc.toLowerCase().contains(searchTerm))
+                .filter(p -> p.getName().toLowerCase().contains(searchTerm) ||
+                            p.getDescription().toLowerCase().contains(searchTerm))
                 .collect(Collectors.toList());
     }
 
@@ -98,7 +98,7 @@ public class ProductService {
         return Product.allProducts.stream()
                 .filter(p -> {
                     try {
-                        double price = Double.parseDouble(p.price.replaceAll("[^0-9]", ""));
+                        double price = Double.parseDouble(p.getPrice().replaceAll("[^0-9]", ""));
                         return price >= minPrice && price <= maxPrice;
                     } catch (NumberFormatException e) {
                         return false;
@@ -157,7 +157,7 @@ public class ProductService {
      */
     public Product findProductByName(String name) {
         return Product.allProducts.stream()
-                .filter(p -> p.name.equals(name))
+                .filter(p -> p.getName().equals(name))
                 .findFirst()
                 .orElse(null);
     }

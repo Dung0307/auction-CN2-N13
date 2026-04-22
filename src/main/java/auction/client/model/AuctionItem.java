@@ -7,9 +7,9 @@ public class AuctionItem {
 
         private double currentPrice;
         private User highestBidder;
-        private List<Bid> bidHistory = new ArrayList<>();
+        private List<BidTransaction> bidHistory = new ArrayList<>();
 
-        public void addBid(Bid bid) {
+        public void addBid(BidTransaction bid) {
             bidHistory.add(bid);
         }
 
