@@ -60,6 +60,7 @@ public class AuctionDetailController implements Initializable {
     // 2. HÀM KHỞI TẠO (Bộ lọc thông minh không làm mất focus)
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //bộ lọc nếu nhập chữ thì trả về rỗng
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String text = change.getText();
             if (!text.matches("[0-9]*")) {
