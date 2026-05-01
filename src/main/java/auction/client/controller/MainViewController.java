@@ -16,7 +16,7 @@ public class MainViewController implements Initializable {
     @FXML
     private FlowPane productContainer;
 
-    // ✅ Service instance
+    // Service instance
     private ProductService productService = new ProductService();
 
     @Override
