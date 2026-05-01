@@ -3,6 +3,7 @@ package auction.client.controller;
 import auction.client.model.Product;
 import auction.client.service.ProductService;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox; // ĐÃ THÊM IMPORT NÀY
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -30,12 +31,26 @@ public class AddProductController {
     @FXML
     private ImageView imagePreview;
 
+    // ĐÃ THÊM: Khai báo ComboBox để chọn loại sản phẩm
+    @FXML
+    private ComboBox<String> categoryBox;
+
     // ✅ Service instance
     private ProductService productService = new ProductService();
     private static final String DEFAULT_PLACEHOLDER = "https://via.placeholder.com/350x350/0B0B10/D8A95C?text=NO+IMAGE+DATA";
 
     @FXML
     public void initialize() {
+        // ĐÃ THÊM: Nạp danh sách các loại sản phẩm cho menu xổ xuống
+        categoryBox.getItems().addAll(
+                "Đồng hồ cao cấp",
+                "Dụng cụ thể thao",
+                "Thiết bị điện tử",
+                "Nghệ thuật & Sưu tầm",
+                "Thời trang & Trang sức",
+                "Sản phẩm đấu giá Khác"
+        );
+
         // Cài đặt một ảnh mặc định (Placeholder) khi chưa có link
         imagePreview.setImage(new Image(DEFAULT_PLACEHOLDER));
 
@@ -63,10 +78,13 @@ public class AddProductController {
         String imageUrl = imageUrlField.getText();
         String desc = descriptionArea.getText();
 
+        // Lấy dữ liệu từ ComboBox
+        String category = categoryBox.getValue();
+
         try {
             // 2. ✅ GỌI SERVICE ĐỂ THÊM PRODUCT
-            // Service sẽ tự động validate dữ liệu
-            productService.addProduct(name, price, imageUrl, desc);
+            // ĐÃ SỬA: Truyền thêm biến category vào hàm addProduct
+            productService.addProduct(name, price, imageUrl, desc, category);
 
             // 3. QUAY TRỞ VỀ MÀN HÌNH CHÍNH (MainView.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/fxml/MainView.fxml"));
@@ -83,5 +101,4 @@ public class AddProductController {
             System.out.println("❌ Lỗi chuyển trang chủ: " + e.getMessage());
         }
     }
-
 }

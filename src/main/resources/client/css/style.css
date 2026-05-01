@@ -467,3 +467,40 @@
 .btn-view-toggle:hover {
     -fx-background-color: #3a4259;
 }
+
+/* =======================================================
+   CUSTOM GIAO DIỆN XỔ XUỐNG CHO COMBOBOX (DARK THEME)
+   ======================================================= */
+
+/*  Đổi màu nền của cả cái bảng xổ xuống */
+.dark-combo-box .list-view {
+    -fx-background-color: #1a1e29;
+    -fx-border-color: #3a4259;
+    -fx-border-width: 1px;
+}
+
+/*  Đổi màu nền và màu chữ cho từng dòng bên trong */
+.dark-combo-box .list-cell {
+    -fx-background-color: #1a1e29;
+    -fx-text-fill: #A0A0B0; /* Màu xám nhạt */
+    -fx-padding: 8px 12px;
+    -fx-cursor: hand;
+}
+
+/*  Hiệu ứng khi rê chuột qua các dòng (Hover) */
+.dark-combo-box .list-cell:filled:hover {
+    -fx-background-color: #2a3143;
+    -fx-text-fill: #D8A95C; /* Sáng chữ màu Vàng Gold lên */
+}
+
+/* Hiệu ứng khi một dòng đang được chọn (Selected) */
+.dark-combo-box .list-cell:filled:selected {
+    -fx-background-color: #3a4259;
+    -fx-text-fill: #00E5FF;
+    -fx-font-weight: bold;
+}
+
+/* Đổi màu cái mũi tên nhỏ bên phải cho đồng bộ */
+.dark-combo-box .arrow {
+    -fx-background-color: #A0A0B0;
+}

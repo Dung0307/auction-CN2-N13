@@ -6,6 +6,12 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.net.URL;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
+
 
 /**
  * ProductService - Xử lý tất cả logic liên quan đến sản phẩm
@@ -19,7 +25,8 @@ public class ProductService {
      * - Tạo object Product
      * - Thêm vào danh sách toàn cầu
      */
-    public void addProduct(String name, String price, String imageUrl, String desc)
+    // Thêm String category vào dòng này
+    public void addProduct(String name, String price, String imageUrl, String desc, String category)
             throws IllegalArgumentException {
 
         // Validate dữ liệu
@@ -27,10 +34,15 @@ public class ProductService {
             throw new IllegalArgumentException("Dữ liệu sản phẩm không hợp lệ!");
         }
 
-        // Tạo và thêm vào kho
-        Product newProduct = new Product(name, price, imageUrl, desc);
+        // Bắt lỗi nếu người dùng quên chọn loại sản phẩm
+        if (category == null || category.trim().isEmpty()) {
+            throw new IllegalArgumentException("Vui lòng chọn loại sản phẩm!");
+        }
+
+        // Truyền category vào Product
+        Product newProduct = new Product(name, price, imageUrl, desc, category);
         Product.allProducts.add(newProduct);
-        System.out.println("✅ Sản phẩm '" + name + "' đã được thêm thành công!");
+        System.out.println("✅ Sản phẩm '" + name + "' thuộc loại '" + category + "' đã được thêm!");
     }
 
     /**
@@ -87,7 +99,7 @@ public class ProductService {
         String searchTerm = keyword.toLowerCase().trim();
         return Product.allProducts.stream()
                 .filter(p -> p.name.toLowerCase().contains(searchTerm) ||
-                            p.desc.toLowerCase().contains(searchTerm))
+                        p.desc.toLowerCase().contains(searchTerm))
                 .collect(Collectors.toList());
     }
 
@@ -109,6 +121,7 @@ public class ProductService {
 
     /**
      * Tải ảnh từ URL với fallback (ảnh mặc định nếu lỗi)
+     * Hỗ trợ định dạng chuẩn (JPG, PNG) và cả định dạng WEBP
      */
     public Image loadImageWithFallback(String imageUrl, String fallbackUrl) {
         if (imageUrl == null || imageUrl.trim().isEmpty()) {
@@ -116,6 +129,20 @@ public class ProductService {
         }
 
         try {
+            // NẾU LÀ ẢNH WEBP -> DÙNG THƯ VIỆN ĐỂ ĐỌC
+            if (imageUrl.toLowerCase().contains(".webp")) {
+                URL url = new URL(imageUrl);
+                BufferedImage bufferedImage = ImageIO.read(url);
+                if (bufferedImage != null) {
+                    // Chuyển đổi BufferedImage sang JavaFX Image
+                    return SwingFXUtils.toFXImage(bufferedImage, null);
+                } else {
+                    System.out.println("⚠️ Lỗi: Không thể phân tích dữ liệu ảnh WebP từ " + imageUrl);
+                    return new Image(fallbackUrl);
+                }
+            }
+
+            // NẾU LÀ ẢNH BÌNH THƯỜNG (JPG, PNG) -> DÙNG JAVAFX NHƯ CŨ
             Image image = new Image(imageUrl, true);
             image.errorProperty().addListener((obs, oldError, newError) -> {
                 if (newError) {
@@ -123,6 +150,7 @@ public class ProductService {
                 }
             });
             return image;
+
         } catch (Exception e) {
             System.out.println("⚠️ Lỗi tải ảnh: " + e.getMessage());
             return new Image(fallbackUrl);

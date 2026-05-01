@@ -30,7 +30,7 @@
                 <Separator orientation="VERTICAL" style="-fx-background-color: #4A4A5A;"/>
                 <Label text="Trang chủ" styleClass="text-muted" style="-fx-cursor: hand;"/>
                 <Label text="&gt;" style="-fx-text-fill: #4A4A5A;"/>
-                <Label text="Đồng hồ cao cấp" styleClass="text-muted" style="-fx-cursor: hand;"/>
+                <Label fx:id="categoryLabel" text="Danh mục" styleClass="text-muted" style="-fx-cursor: hand;"/>
                 <Label text="&gt;" style="-fx-text-fill: #4A4A5A;"/>
                 <Label fx:id="breadcrumbLabel" text="Rolex GMT-Master II Ice" styleClass="text-bright"/>
             </HBox>

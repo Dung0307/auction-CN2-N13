@@ -6,14 +6,14 @@ import auction.client.model.Product;
 
 /**
  * AuctionService - Xử lý tất cả logic liên quan đến đấu giá
- *
+ * <p>
  * NHIỆM VỤ:
  * - Validate giá đặt
  * - Tính mức giá tiếp theo
  * - Parse & format giá
  * - Xử lý đặt giá
  * - Quản lý trạng thái phiên đấu giá
- *
+ * <p>
  * Controller chỉ gọi service này, KHÔNG xử lý logic
  */
 public class AuctionService {
@@ -28,7 +28,7 @@ public class AuctionService {
      * 1. VALIDATE BID
      * Kiểm tra giá đặt có hợp lệ không
      *
-     * @param bidText giá user nhập
+     * @param bidText    giá user nhập
      * @param minimumBid giá tối thiểu phải đặt
      */
     public void validateBid(String bidText, double minimumBid)
